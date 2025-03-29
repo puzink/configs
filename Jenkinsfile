@@ -1,9 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('Stage 1') {
+        stage('Build') {
             steps {
-                echo 'Hello world!' 
+                echo 'Start building..' 
+                sh 'mvn -B -DskipTests clean package'
+                archiveArtifacts artifacts: '**/target/Configurator.jar', fingerprint: true
+                echo 'Building has been finished!'
+            }
+        }
+        stage('delivery') {
+            steps {
+                echo 'Start delivering..' 
+                echo 'Delivery has not been realized yet'    
+            }
+        }
+        stage('deploy') {
+            steps {
+                echo 'Start deploying...'
+                echo 'Deploying has not been realized yet'    
             }
         }
     }
