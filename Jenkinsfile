@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Start building..' 
-                sh 'mvn -B -DskipTests clean package'
+                bat 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/Configurator.jar', fingerprint: true
                 echo 'Building has been finished!'
             }
