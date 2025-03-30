@@ -9,7 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Start building..' 
-                powershell 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests clean package'
                 archiveArtifacts artifacts: '**/target/Configurator.jar', fingerprint: true
                 echo 'Building has been finished!'
             }
