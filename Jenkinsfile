@@ -18,7 +18,7 @@ pipeline {
         stage('Build image') {
             agent {
                 docker {
-                    image 'docker:28.0.4-cli'
+                    image 'docker:28.0.4'
                 }
             }
             environment {
