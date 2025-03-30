@@ -11,6 +11,7 @@ pipeline {
             }
             steps {
                 echo 'Start building..' 
+                sh 'whoami'
                 sh 'mvn -B -DskipTests clean package'
                 echo 'Building has been finished!'
             }
