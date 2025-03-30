@@ -1,12 +1,14 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.9-eclipse-temurin-17'
-            args '-v $HOME/.m2:/root/.m2'
-        }
-    }
+    agent none
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.9.9-eclipse-temurin-17'
+                    args '-v $HOME/.m2:/root/.m2'
+
+                }
+            }
             steps {
                 echo 'Start building..' 
                 sh 'mvn -B -DskipTests clean package'
@@ -14,6 +16,7 @@ pipeline {
             }
         }
         stage('Build image') {
+            agent linux
             steps {
                 echo 'Start building image..'
                 sh "docker build -t Configurator:${env.BUILD_ID}"
