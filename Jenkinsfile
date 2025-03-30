@@ -11,7 +11,6 @@ pipeline {
             }
             steps {
                 echo 'Start building..' 
-                sh 'whoami'
                 sh 'mvn -B -DskipTests clean package'
                 echo 'Building has been finished!'
             }
@@ -28,7 +27,7 @@ pipeline {
             }
             steps {
                 echo 'Start building image..'
-                sh 'whoami'
+                sh 'compgen -u'
                 sh 'ls -l /var/run/docker.sock'
                 sh "docker build -t Configurator:${env.BUILD_ID} ."
                 echo 'Finished image building!'    
