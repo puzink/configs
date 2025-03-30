@@ -21,6 +21,9 @@ pipeline {
                     image 'docker:28.0.4-cli'
                 }
             }
+            environment {
+                HOME = "${env.WORKSPACE}"
+            }
             steps {
                 echo 'Start building image..'
                 sh "docker build -t Configurator:${env.BUILD_ID} ."
