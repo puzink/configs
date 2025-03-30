@@ -27,8 +27,6 @@ pipeline {
             }
             steps {
                 echo 'Start building image..'
-                sh 'compgen -u'
-                sh 'ls -l /var/run/docker.sock'
                 sh "docker build -t Configurator:${env.BUILD_ID} ."
                 echo 'Finished image building!'    
             }
