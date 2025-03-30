@@ -23,7 +23,7 @@ pipeline {
             }
             steps {
                 echo 'Start building image..'
-                sh "docker build -t Configurator:${env.BUILD_ID}"
+                sh "docker build -t Configurator:${env.BUILD_ID} ."
                 echo 'Finished image building!'    
             }
         }
