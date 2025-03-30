@@ -10,11 +10,18 @@ pipeline {
             steps {
                 echo 'Start building..' 
                 sh 'mvn -B -DskipTests clean package'
-                archiveArtifacts artifacts: '**/target/Configurator.jar', fingerprint: true
                 echo 'Building has been finished!'
             }
         }
-        stage('delivery') {
+        stage('Build image') {
+            steps {
+                echo 'Start building image..'
+                sh 'docker build -t Configurator:${env.BUILD_ID}'
+                echo 'Finished image building!'    
+            }
+        }
+    
+        stage('delivery to docker registry') {
             steps {
                 echo 'Start delivering..' 
                 echo 'Delivery has not been realized yet'    
