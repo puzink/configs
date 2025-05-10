@@ -32,12 +32,7 @@ pipeline {
         }
     
         stage('delivery to docker registry') {
-            agent {
-                docker {
-                    image 'docker:28.0.4'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
-                }
-            }
+            agent any
             environment {
                 DOCKER_REGISTRY_ID = credentials('yandex-docker-registry')
                 OATH_TOKEN = credentials('oath-yandex-console')
