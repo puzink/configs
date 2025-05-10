@@ -16,9 +16,6 @@ pipeline {
         }
         stage('Build image') {
             agent any
-            environment {
-                HOME = "${env.WORKSPACE}"
-            }
             steps {
                 echo 'Start building image..'
                 sh "docker build -t configurator:${env.BUILD_ID} ."
