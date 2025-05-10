@@ -15,12 +15,7 @@ pipeline {
             }
         }
         stage('Build image') {
-            agent {
-                docker {
-                    image 'docker:28.0.4'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
-                }
-            }
+            agent any
             environment {
                 HOME = "${env.WORKSPACE}"
             }
