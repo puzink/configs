@@ -32,6 +32,7 @@ pipeline {
         }
     
         stage('delivery to docker registry') {
+            agent any
             environment {
                 DOCKER_REGISTRY_ID = credentials('yandex-docker-registry')
             }
