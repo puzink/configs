@@ -32,8 +32,13 @@ pipeline {
         }
     
         stage('delivery to docker registry') {
+            environment {
+                DOCKER_REGISTRY_ID = credentials('yandex-docker-registry')
+            }
             steps {
-                echo 'Start delivering..' 
+                echo 'Start delivering..'
+                sh "docker tag configurator:${env.BUILD_ID} cr.yandex/${DOCKER_REGISTRY_ID}/configurator"
+                sh "docker push cr.yandex/${DOCKER_REGISTRY_ID}/configurator"
                 echo 'Delivery has not been realized yet'    
             }
         }
