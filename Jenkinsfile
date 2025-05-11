@@ -18,6 +18,7 @@ pipeline {
             agent any
             steps {
                 echo 'Start building image..'
+                echo "I am \$whoami"
                 sh "docker build -t configurator:${env.BUILD_ID} ."
                 echo 'Finished image building!'    
             }
@@ -46,7 +47,7 @@ pipeline {
             }
             steps {
                 echo 'Start deploying...'
-                echo "I am $whoami"
+                echo "I am \$whoami"
                 sh "ssh -tt -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
                 echo 'These commands will be run on: $( uname -a )'
                 sh '''
