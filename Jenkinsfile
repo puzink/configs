@@ -47,7 +47,7 @@ pipeline {
             steps {
                 echo 'Start deploying...'
                 sh "ssh -tt -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
-                echo "These commands will be run on: $( uname -a )"
+                echo 'These commands will be run on: $( uname -a )'
                 sh '''
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
                     cut -f1 -d\',\' | \
