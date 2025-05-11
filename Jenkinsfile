@@ -58,6 +58,7 @@ pipeline {
                     tr -d \'"\' | \
                     docker login --username iam --password-stdin cr.yandex
                     docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}
+                    docker run -d --rm -p 8080:8080 cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}"
                     exit
                     EOF"""
                 echo 'Finished deploying'    
