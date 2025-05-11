@@ -46,7 +46,13 @@ pipeline {
             steps {
                 echo 'Start deploying...'
                 sh "ssh -l $USER_NAME $SERVER_IP"
-                sh "curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | cut -f1 -d',' | cut -f2 -d':' | tr -d '"' | docker login --username iam --password-stdin cr.yandex"
+                sh '''
+                    curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
+                    cut -f1 -d\',\' | \
+                    cut -f2 -d\':\' | \
+                    tr -d \'"\' | \
+                    docker login --username iam --password-stdin cr.yandex
+                '''
                 sh "docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}"
                 echo 'Deploying has not been realized yet'    
             }
