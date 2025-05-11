@@ -46,6 +46,7 @@ pipeline {
             }
             steps {
                 echo 'Start deploying...'
+                echo 'I am $(whoami)'
                 sh "ssh -tt -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
                 echo 'These commands will be run on: $( uname -a )'
                 sh '''
