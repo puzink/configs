@@ -62,7 +62,7 @@ pipeline {
                     cut -f2 -d\':\' | \
                     tr -d \'"\' | \
                     docker login --username iam --password-stdin cr.yandex
-                    docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}
+                    docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator
                     exit
                     EOF"""
                 echo 'Finished deploying'    
