@@ -51,7 +51,7 @@ pipeline {
             steps {
                 echo 'Start deploying...'
                 sh """
-                    ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP << EOF 
+                    ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP /bin/bash << EOF 
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
                     cut -f1 -d\',\' | \
                     cut -f2 -d\':\' | \
