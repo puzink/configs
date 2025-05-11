@@ -42,10 +42,12 @@ pipeline {
                 SERVER_IP = credentials('server-ip')
                 USER_NAME = credentials('vm-username')
                 DOCKER_REGISTRY_ID = credentials('yandex-docker-registry')
+                PATH_TO_PRIVATE_KEY = credentials('path-to-private-key')
             }
             steps {
                 echo 'Start deploying...'
-                sh "ssh -l $USER_NAME $SERVER_IP"
+                sh "ssh -tt -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
+                echo "These commands will be run on: $( uname -a )"
                 sh '''
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
                     cut -f1 -d\',\' | \
