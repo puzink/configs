@@ -54,7 +54,7 @@ pipeline {
                     def output = sh(script: "echo \$(whoami)", returnStdout: true)
                     echo "Output: ${output}"
                 }
-                sh "ssh -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
+                sh "ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
                 echo 'These commands will be run on: $( uname -a )'
                 sh '''
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
