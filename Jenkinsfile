@@ -54,16 +54,16 @@ pipeline {
                     def output = sh(script: "echo \$(whoami)", returnStdout: true)
                     echo "Output: ${output}"
                 }
-                sh "ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP"
                 echo 'These commands will be run on: $( uname -a )'
-                sh '''
+                sh """
+                    ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
                     cut -f1 -d\',\' | \
                     cut -f2 -d\':\' | \
                     tr -d \'"\' | \
                     docker login --username iam --password-stdin cr.yandex
-                '''
-                sh "docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}"
+                    docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}
+                """
                 echo 'Deploying has not been realized yet'    
             }
         }
