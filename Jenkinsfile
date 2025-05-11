@@ -37,7 +37,7 @@ pipeline {
                 sh "docker login --username oauth --password ${OATH_TOKEN} cr.yandex"
                 sh "docker tag configurator:${env.BUILD_ID} cr.yandex/${DOCKER_REGISTRY_ID}/configurator"
                 sh "docker push cr.yandex/${DOCKER_REGISTRY_ID}/configurator"
-                echo 'Delivery has not been realized yet'    
+                echo 'Finished delivery'    
             }
         }
         stage('deploy on VM') {
@@ -56,15 +56,16 @@ pipeline {
                 }
                 echo 'These commands will be run on: $( uname -a )'
                 sh """
-                    ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP
+                    ssh -vvv -tt -o StrictHostKeyChecking=no -l $USER_NAME -i $PATH_TO_PRIVATE_KEY $SERVER_IP << EOF 
                     curl --header Metadata-Flavor:Google 169.254.169.254/computeMetadata/v1/instance/service-accounts/default/token | \
                     cut -f1 -d\',\' | \
                     cut -f2 -d\':\' | \
                     tr -d \'"\' | \
                     docker login --username iam --password-stdin cr.yandex
                     docker pull cr.yandex/${DOCKER_REGISTRY_ID}/configurator:${env.BUILD_ID}
-                """
-                echo 'Deploying has not been realized yet'    
+                    exit
+                    EOF"""
+                echo 'Finished deploying'    
             }
         }
     }
